@@ -1,2 +1,3 @@
-# calibrating-llm-mt
-The codebase for "Calibrating Translation Decoding with Quality Estimation on LLMs"
+# Calibrating Translation Decoding with Quality Estimation on LLMs
+
+The code, models, and human evaluation results will be released soon.
