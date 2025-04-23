@@ -1,3 +1,3 @@
 # Calibrating Translation Decoding with Quality Estimation on LLMs
 
-The code, models, and human evaluation results will be released soon.
+The code, models, and human evaluation results will be released soon...
