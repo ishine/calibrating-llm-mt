@@ -9,8 +9,6 @@ from llama_recipes.utils.config_utils import get_dataloader_kwargs
 from llama_recipes.datasets.translation_dataset import get_preprocessed_bitext, get_vllm_preprocessed_bitext
 from llama_recipes.datasets.monolingual_dataset import get_preprocessed_monolingual_data
 from llama_recipes.datasets.preference_dataset import get_preprocessed_preference_data
-from llama_recipes.datasets.alma_r_preference_dataset import get_preprocessed_alma_r_preference_data
-from llama_recipes.datasets.alma_r_list_padding_dataset import get_preprocessed_alma_r_list_padding_data
 from llama_recipes.datasets.calibration_dataset import get_calibration_data
 from llama_recipes.configs import train_config as TRAIN_CONFIG
 
@@ -47,32 +45,6 @@ def get_prefernce_dataset(
             split,
             lang_pairs,
             filter,
-        )
-    elif dataset_name == "haoranxu/ALMA-R-Preference" and not listwise:
-        # ALMA-R-Preference only has train set
-        return get_preprocessed_alma_r_preference_data(
-            tokenizer,
-            dataset_name,
-            "train",
-            lang_pairs,
-            mode,
-            filter=filter
-        )
-    elif dataset_name == "haoranxu/ALMA-R-Preference" and listwise:
-        return get_preprocessed_alma_r_list_padding_data(
-            tokenizer,
-            dataset_name,
-            "train",
-            lang_pairs,
-            batch_size
-        )
-    elif dataset_name == "flores-gpt" and listwise:
-        return get_calibration_data(
-            tokenizer,
-            dataset_name,
-            subset_name,
-            lang_pairs,
-            batch_size
         )
     elif dataset_name == "calibration" and listwise:
         return get_calibration_data(

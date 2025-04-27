@@ -373,7 +373,7 @@ def compute_value_loss(train_config, logits, scores, labels, tokenizer, xpo_hype
         return get_value_loss(logits, scores, labels, tokenizer, xpo_hyper, beta)
 
 
-def XPO_train(model, train_dataloader, eval_dataloader, tokenizer, optimizer, lr_scheduler, gradient_accumulation_steps,
+def calibration_train(model, train_dataloader, eval_dataloader, tokenizer, optimizer, lr_scheduler, gradient_accumulation_steps,
               train_config, loss_module, fsdp_config=None, local_rank=None, rank=None, wandb_run=None):
     """
     Trains the model on the given dataloader with XPO objective.
@@ -590,9 +590,9 @@ def XPO_train(model, train_dataloader, eval_dataloader, tokenizer, optimizer, lr
         lr_scheduler.step()
         should_save_model = train_config.save_model
         if train_config.run_validation:
-            eval_ppl, eval_epoch_loss, temp_val_loss, temp_step_perplexity = XPO_evaluation(model, train_config, loss_module,
-                                                                                            eval_dataloader, local_rank,
-                                                                                            tokenizer, wandb_run)
+            eval_ppl, eval_epoch_loss, temp_val_loss, temp_step_perplexity = \
+                calibration_evaluation(model, train_config, loss_module,
+                                       eval_dataloader, local_rank, tokenizer, wandb_run)
             if train_config.save_metrics:
                 val_step_loss.extend(temp_val_loss)
                 val_step_perplexity.extend(temp_step_perplexity)
@@ -707,7 +707,7 @@ def XPO_train(model, train_dataloader, eval_dataloader, tokenizer, optimizer, lr
     return results
 
 
-def XPO_evaluation(model, train_config, loss_module, eval_dataloader, local_rank, tokenizer, wandb_run):
+def calibration_evaluation(model, train_config, loss_module, eval_dataloader, local_rank, tokenizer, wandb_run):
     """
     Evaluates the model on the given dataloader
 
@@ -1223,6 +1223,7 @@ def get_parameter_dtypes(model):
         parameter_dtypes[name] = parameter.dtype
     return parameter_dtypes
 
+
 def print_model_size(model, config, rank: int = 0) -> None:
     """
     Print model name, the number of trainable parameters and initialization time.
@@ -1238,8 +1239,6 @@ def print_model_size(model, config, rank: int = 0) -> None:
         print(f"--> Model {config.model_name}")
         total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
         print(f"\n--> {config.model_name} has {total_params / 1e6} Million params\n")
-
-
 
 
 def get_policies(cfg, rank):
@@ -1275,6 +1274,7 @@ def get_policies(cfg, rank):
             print(f"bFloat16 support not present. Using FP32, and not mixed precision")
     wrapping_policy = get_llama_wrapper()
     return mixed_precision_policy, wrapping_policy
+
 
 def save_train_params(train_config, fsdp_config, rank):
     """
@@ -1314,6 +1314,7 @@ def save_train_params(train_config, fsdp_config, rank):
             f.write(config_yaml)
         if rank==0:
             print(f"training params are saved in {file_name}")
+
 
 def save_to_json(output_filename, train_step_loss, train_epoch_loss, train_step_ppl, train_epoch_ppl, val_step_loss, val_epoch_loss, val_step_ppl, val_epoch_ppl):
     metrics_data = {

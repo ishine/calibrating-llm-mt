@@ -38,7 +38,7 @@ from llama_recipes.utils.train_utils import (
     setup,
     setup_environ_flags,
     train,
-    XPO_train,
+    calibration_train,
     ScaledValueLoss,
 )
 from peft import get_peft_model, PeftModel
@@ -412,7 +412,7 @@ def main(**kwargs):
 
     print(train_config, flush=True)
 
-    results = XPO_train(
+    results = calibration_train(
         model,
         train_dataloader,
         eval_dataloader,
