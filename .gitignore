@@ -1,1 +1,12 @@
+src/llama_recipes/model_checkpointing/__pycache__/
+src/llama_recipes/data/llama_guard/__pycache__/
+src/llama_recipes/policies/__pycache__/
+src/llama_recipes/datasets/grammar_dataset/__pycache__/
+src/llama_recipes/utils/__pycache__/
+src/llama_recipes/inference/__pycache__/
+src/llama_recipes/datasets/__pycache__/
+src/llama_recipes/data/__pycache__/
+src/llama_recipes/configs/__pycache__/
+src/llama_recipes/__pycache__/
+experiments/
 .idea/

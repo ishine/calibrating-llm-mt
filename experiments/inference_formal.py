@@ -4,6 +4,7 @@
 import os
 import shutil
 import sys
+import re
 import time
 import fire
 import torch
@@ -111,6 +112,11 @@ def main(
     tokenizer.padding_side = 'left'
     model.generation_config.pad_token_id = tokenizer.pad_token_id
 
+    terminators = [
+        tokenizer.eos_token_id,
+        tokenizer.convert_tokens_to_ids("<|eot_id|>")
+    ]
+
     # TODO, batch inference
     def inference_new(
             dataloader,
@@ -144,6 +150,7 @@ def main(
                     repetition_penalty=repetition_penalty,
                     length_penalty=length_penalty,
                     num_beams=config.beam_size,
+                    eos_token_id=terminators,
                     **kwargs,
                 )
 
@@ -153,8 +160,11 @@ def main(
                 batch_output = batch_output[:, batch_len:]
                 batch_output = [tokenizer.decode(output, skip_special_tokens=True) for output in batch_output]
 
-                # replace \n with \t to read when hallucinating
-                batch_output = [sent.replace("\n", "\t").strip() for sent in batch_output]
+                # replace \n with \t when hallucinating
+                # batch_output = [sent.replace("\n", "\t").strip() for sent in batch_output]
+
+                # remove \n with \t when hallucinating
+                batch_output = [re.split(r'[\t\n]', sent)[0] for sent in batch_output]
 
                 output += batch_output
             pbar.update(1)
@@ -174,6 +184,7 @@ def main(
         if test_config.dataset == "haoranxu/ALMA-R-Preference":
             dataset_test = get_prefernce_dataset(
                 tokenizer,
+                test_config,
                 test_config.dataset,
                 mode="infer",
                 subset_name=test_config.subset_name,
