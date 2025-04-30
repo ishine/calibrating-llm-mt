@@ -4,7 +4,7 @@ Official implementation based on the PyTorch and Hugging Face Transformers libra
 
 [[Paper](https://arxiv.org/pdf/2504.19044)]
 
-[[Human Annotation]](https://huggingface.co/datasets/Calibration-Translation/Calibration-translation-human-eval)
+[[Human Annotation](https://huggingface.co/datasets/Calibration-Translation/Calibration-translation-human-eval)]
 
 
 The full code, models, and human evaluation results will be released soon.
