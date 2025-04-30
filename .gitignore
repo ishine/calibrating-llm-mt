@@ -1,3 +1,4 @@
+.DS_Store
 src/llama_recipes/model_checkpointing/__pycache__/
 src/llama_recipes/data/llama_guard/__pycache__/
 src/llama_recipes/policies/__pycache__/
