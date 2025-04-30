@@ -30,7 +30,7 @@ You can find datasets this paper involved here:
 
 
 # Quick Run
-You can reproduce the results of applying calibration on TowerInstruct-Mistral-7B data in Table-1. The training will 
+You can reproduce the results of applying calibration on TowerInstruct-Mistral-7B in Table-1. The training will 
 take around 1 GPU hour on H100. 
 ```
 sh run.sh
