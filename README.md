@@ -6,5 +6,33 @@ Official implementation based on the PyTorch and Hugging Face Transformers libra
 
 [[Human Annotation](https://huggingface.co/datasets/Calibration-Translation/Calibration-translation-human-eval)]
 
-
 The full code, models, and human evaluation results will be released soon.
+
+# Installation
+All experiments are tested with Python 3.8, torch 2.4.0
+
+### Install Requirements
+```
+pip install -r requirements.txt
+```
+
+### Install Codebase
+```
+cd calibrating-llm-mt
+pip install -U pip setuptools
+pip install -e .
+```
+
+# Datasets
+You can find datasets this paper involved here:
+
+[calibration dataset](./src/llama_recipes/customer_data/calibration), [wmt24_testset](./src/llama_recipes/customer_data/wmt24_testset), [wmt22_metric_testset](./src/llama_recipes/customer_data/da_dataset)
+
+
+# Quick Run
+You can reproduce the results of applying calibration on TowerInstruct-Mistral-7B data in Table-1. The training will 
+take around 1 GPU hour on H100. 
+```
+sh run.sh
+```
+

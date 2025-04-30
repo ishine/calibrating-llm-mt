@@ -144,15 +144,3 @@ for EPOCH in 0; do
         --output_dir scores/$BASE_MODEL/calibration/${SUBSET}/${SETTING}/${EPOCH}/wmt-qe-22-test \
         --lang_pairs en-de,en-ru
 done
-
-
-for EPOCH in 0; do
-    python reward_inference.py --model_name Unbabel/$BASE_MODEL \
-        --peft_model $CKP_DIR/$BASE_MODEL/calibration/${SUBSET}/${SETTING}/${EPOCH} \
-        --dataset da_dataset \
-        --subset_name wmt-qe-2022.train.csv \
-        --val_batch_size 32 \
-        --do_sample False \
-        --output_dir scores/$BASE_MODEL/calibration/${SUBSET}/${SETTING}/${EPOCH}/wmt-qe-22-train \
-        --lang_pairs en-de,en-ru
-done
