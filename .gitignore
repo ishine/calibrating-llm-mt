@@ -8,5 +8,5 @@ src/llama_recipes/datasets/__pycache__/
 src/llama_recipes/data/__pycache__/
 src/llama_recipes/configs/__pycache__/
 src/llama_recipes/__pycache__/
-experiments/
+experiments/checkpoints/
 .idea/
