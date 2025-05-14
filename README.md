@@ -2,7 +2,8 @@
 
 Official implementation based on the PyTorch and Hugging Face Transformers libraries.
 
-[[Human Annotation]([https://huggingface.co/datasets/Calibration-Translation/Calibration-translation-human-eval](https://huggingface.co/datasets/Anonymous-Account/Calibration-translation-human-eval)]
+[Human Annotation](https://huggingface.co/datasets/Calibration-Translation/Calibration-translation-human-eval)
+
 
 **The full code, models, and human evaluation results are releasing ...**
 
