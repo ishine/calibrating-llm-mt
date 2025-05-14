@@ -2,9 +2,7 @@
 
 Official implementation based on the PyTorch and Hugging Face Transformers libraries.
 
-[[Paper](https://arxiv.org/pdf/2504.19044)]
-
-[[Human Annotation](https://huggingface.co/datasets/Calibration-Translation/Calibration-translation-human-eval)]
+[[Human Annotation]([https://huggingface.co/datasets/Calibration-Translation/Calibration-translation-human-eval](https://huggingface.co/datasets/Anonymous-Account/Calibration-translation-human-eval))]
 
 **The full code, models, and human evaluation results are releasing ...**
 
@@ -30,8 +28,8 @@ You can find datasets this paper involved here:
 
 
 # Quick Run
-You can reproduce the results of applying calibration on TowerInstruct-Mistral-7B in Table-1. The training will 
-take around 1 GPU hour on H100. 
+You can reproduce the results of applying calibration on TowerInstruct-Mistral-7B in Table-1. Training will 
+takes around 1 GPU hour on H100. 
 ```
 cd experiments
 sh run.sh
