@@ -27,3 +27,4 @@ sentence_transformers
 codeshield
 gradio
 markupsafe==2.0.1
+unbabel-comet==2.2.2

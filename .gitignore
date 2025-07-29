@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 src/llama_recipes/customer_data/
 experiments/wandb/
 experiments/results/
+=======
+.DS_Store
+>>>>>>> 1f8301a8cef18328b92517fdb9492797aa1d834f
 src/llama_recipes/model_checkpointing/__pycache__/
 src/llama_recipes/data/llama_guard/__pycache__/
 src/llama_recipes/policies/__pycache__/
