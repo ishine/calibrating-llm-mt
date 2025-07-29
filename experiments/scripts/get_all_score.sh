@@ -4,10 +4,13 @@
 
 # Tower
 LANG_PAIRS=(en-de en-es en-ru en-zh en-fr en-nl en-it en-pt en-ko)
+# LANG_PAIRS=(en-de en-fr en-zh en-ru)
+LANG_PAIRS=(en-zh zh-en en-de de-en)
+
 
 # ALMA
-LANG_PAIRS=(en-de en-cs en-is en-zh en-ru)
-LANG_PAIRS=(de-en cs-en is-en zh-en ru-en)
+#LANG_PAIRS=(en-de en-cs en-is en-zh en-ru)
+#LANG_PAIRS=(de-en cs-en is-en zh-en ru-en)
 
 # Base directory
 BASE_DIR="../results/TowerBase-7B-v0.1/calibration/wmt24_testset/gpt-4o-mini-16-1.0-98-new"
@@ -15,9 +18,13 @@ BASE_DIR="../results/TowerInstruct-7B-v0.2/calibration/wmt24_testset/gpt-4o-mini
 
 BASE_DIR="../results/TowerBase-7B-v0.1/calibration/wmt24_testset/gpt-4o-mini-16-1.0-98-new"
 BASE_DIR="../results/TowerBase-13B-v0.1/calibration/wmt24_testset/gpt-4o-mini-16-1.0-98-new"
-#BASE_DIR="../results/TowerInstruct-Mistral-7B-v0.2/calibration/wmt24_testset/gpt-4o-mini-16-1.0-98-new"
+BASE_DIR="../results/TowerInstruct-Mistral-7B-v0.2/calibration/wmt24_testset/gpt-4o-mini-16-1.0-98-new"
+BASE_DIR="../results/TowerInstruct-Mistral-7B-v0.2/calibration/wmt24_testset/gpt-4o-mini-16-1.0-98-new"
 
-BASE_DIR="../results/calibration/wmt22_testset/gpt-4o-mini-16-1.0-98"
+# BASE_DIR="../results/TowerInstruct-Mistral-7B-v0.2/calibration/wmt24_plus_doc_testset/gpt-4o-mini-16-1.0-98-new"
+BASE_DIR="../results/TowerInstruct-Mistral-7B-v0.2/calibration/wmt22_testset/rebuttal"
+BASE_DIR="../results/TowerInstruct-Mistral-7B-v0.2/calibration/wmt22_testset/rebuttal"
+
 
 # Define different settings
 
@@ -37,48 +44,6 @@ SETTINGS=(
 )
 
 
-SETTINGS=(
-  "1.0-0.0-0.0-5e-5-beam5"
-  "1.0-0.0-1.0-5e-5-beam5"
-  "1.0-1.0-0.0-5e-5-beam5"
-)
-
-
-:<<!
-SETTINGS=(
-  "1.0-0.0-0.0-1e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-2e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-3e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-4e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-5e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-6e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-7e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-8e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-9e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-0.0-1e-4-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-1e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-2e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-3e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-4e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-5e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-6e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-7e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-8e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-9e-5-kiwi-xxl.score-beam5"
-  "1.0-0.0-1.0-1e-4-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-1e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-2e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-3e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-4e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-5e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-6e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-7e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-8e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-9e-5-kiwi-xxl.score-beam5"
-  "1.0-1.0-0.0-1e-4-kiwi-xxl.score-beam5"
-)
-!
-
 # Iterate over settings
 for SETTING in "${SETTINGS[@]}"; do
   DIR="$BASE_DIR/$SETTING/0"
@@ -91,7 +56,7 @@ for SETTING in "${SETTINGS[@]}"; do
 
   # Loop through language pairs
   for PAIR in "${LANG_PAIRS[@]}"; do
-    KIWI_FILE_NAME="$DIR/$PAIR/kiwi-xxl.score"
+    KIWI_FILE_NAME="$DIR/$PAIR/kiwi-xl.score"
     COMET_FILE_NAME="$DIR/$PAIR/comet.score"
     XCOMET_FILE_NAME="$DIR/$PAIR/xcomet.qe.score"
 
@@ -108,8 +73,9 @@ for SETTING in "${SETTINGS[@]}"; do
     KIWI_SCORES+="$KIWI_SCORE\t"
     COMET_SCORES+="$COMET_SCORE\t"
     XCOMET_SCORES+="$XCOMET_SCORE\t"
-    SCORES+="$COMET_SCORE\t$KIWI_SCORE\t$XCOMET_SCORE\t"
-    # SCORES+="$KIWI_SCORE\t$COMET_SCORE\t"
+    # SCORES+="$COMET_SCORE\t$KIWI_SCORE\t$XCOMET_SCORE\t"
+    # SCORES+="$COMET_SCORE\t"
+    SCORES+="$KIWI_SCORE\t"
   done
 
   # Trim trailing tab and print the formatted output

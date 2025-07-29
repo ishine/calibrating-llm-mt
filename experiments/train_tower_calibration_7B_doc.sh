@@ -7,7 +7,7 @@
 #SBATCH -p gpu
 #SBATCH --gres gpu:1
 #SBATCH --partition=gpu_h100
-#SBATCH --time=01-00:00:00
+#SBATCH --time=00-02:00:00
 
 #SBATCH -o /gpfs/work4/0/gus20642/dwu18/log/out.calibration.%j.o
 #SBATCH -e /gpfs/work4/0/gus20642/dwu18/log/out.calibration.%j.e
@@ -24,10 +24,10 @@ evaluate_lang_directions() {
     local BASE_SYS="$2"     # Base system directory
 
     # Define language directions (can customize or pass as parameter if needed)
-    local LANG_DIRECTIONS=("en-de" "en-es" "en-ru" "en-zh" "en-fr" "en-nl" "en-it" "en-pt" "en-ko") # tower-1 langs
+    local LANG_DIRECTIONS=("en-de" "en-ru" "en-zh" "en-fr") # tower-1 langs
 
     # Define base source and target directories
-    local BASE_SRC="/gpfs/work4/0/gus20642/dwu18/project/value_finetuning/src/llama_recipes/customer_data/${TEST_DATASET}/test"
+    local BASE_SRC="/gpfs/work4/0/gus20642/dwu18/project/calibrating-llm-mt/src/llama_recipes/customer_data/${TEST_DATASET}/test"
     local BASE_TGT=$BASE_SRC
     # local BASE_TGT="/gpfs/work4/0/gus20642/dwu18/project/value_finetuning/src/llama_recipes/customer_data/${TEST_DATASET}/test"
     
@@ -55,7 +55,6 @@ evaluate_lang_directions() {
         # Run COMET scoring
         comet-score -s $SRC_FILE -t $SYS_FILE -r $TGT_FILE --model Unbabel/wmt22-comet-da >> $COMET_SCORE_FILE
         comet-score -s $SRC_FILE -t $SYS_FILE --model Unbabel/XCOMET-XXL >> $XCOMET_SCORE_FILE
-        comet-score -s $SRC_FILE -t $SYS_FILE --model Unbabel/wmt22-cometkiwi-da >> $KIWI_SCORE_FILE
         comet-score -s $SRC_FILE -t $SYS_FILE --model Unbabel/wmt23-cometkiwi-da-xl >> $KIWI_XL_SCORE_FILE
         comet-score -s $SRC_FILE -t $SYS_FILE --model Unbabel/wmt23-cometkiwi-da-xxl >> $KIWI_XXL_SCORE_FILE
 
@@ -86,14 +85,16 @@ echo "Subset is set to: $SUBSET"
 echo "List size is set to: $LIST_SIEZ"
 echo "Base_model is set to: $BASE_MODEL"
 
-SETTING=${ALPHA}-${BETA}-${GAMA}-${LR}-${METRIC}-debug2
-TEST_DATASET=wmt24_testset
+SETTING=${ALPHA}-${BETA}-${GAMA}-${LR}-${METRIC}
+TEST_DATASET=wmt24_plus_doc_testset
 CKP_DIR=/gpfs/work4/0/gus20642/dwu18/project/calibrating-llm-mt/experiments/checkpoints
 
 echo "CKP: $CKP_DIR/$BASE_MODEL/calibration/${SUBSET}/${SETTING}"
 echo "RESULTS: results/$BASE_MODEL/calibration/${TEST_DATASET}/${SUBSET}/${SETTING}-beam5"
 echo "SCORES: scores/$BASE_MODEL/calibration/${SUBSET}/${SETTING}/0/wmt-qe-22-test"
 
+
+:<<!
 # Train
 python -m llama_recipes.calibration --use_peft --peft_method lora \
         --model_name Unbabel/$BASE_MODEL \
@@ -114,6 +115,8 @@ python -m llama_recipes.calibration --use_peft --peft_method lora \
         --listwise_loss \
         --list_size $LIST_SIEZ \
         --use_wandb
+!
+
 
 # Test
 for EPOCH in 0; do
@@ -124,7 +127,7 @@ for EPOCH in 0; do
             --val_batch_size 8 \
             --do_sample False \
             --output_dir ${BASE_SYS} \
-            --lang_pairs en-de,en-fr,en-nl,en-it,en-es,en-pt,en-ko,en-ru,en-zh \
+            --lang_pairs en-de,en-fr,en-zh,en-ru \
             --beam_size 5
     evaluate_lang_directions ${TEST_DATASET} ${BASE_SYS}
 done

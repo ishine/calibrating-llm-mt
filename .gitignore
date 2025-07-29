@@ -1,3 +1,6 @@
+src/llama_recipes/customer_data/
+experiments/wandb/
+experiments/results/
 src/llama_recipes/model_checkpointing/__pycache__/
 src/llama_recipes/data/llama_guard/__pycache__/
 src/llama_recipes/policies/__pycache__/

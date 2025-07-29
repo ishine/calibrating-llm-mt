@@ -88,7 +88,7 @@ def load_preference(dataset_name, subset_name, metric, split, lang_pairs, subset
         multiple_datasets.append(dataset)
 
     dataset = concatenate_datasets(multiple_datasets)
-    dataset = dataset.shuffle(seed=42)
+    dataset = dataset.shuffle(seed=142)
 
     return dataset
 
@@ -169,7 +169,7 @@ def get_calibration_data(tokenizer, dataset_name, subset_name, metric, split, la
         summary = summary[:200] # max len for summary
         summary.append(tokenizer.eos_token_id)
         score = float(sample["score"])
-        score = float(min(max(score, 0), 1))
+        # score = float(min(max(score, 0), 1))
 
         return {
             "input_ids": prompt + summary,
